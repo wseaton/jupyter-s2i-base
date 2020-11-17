@@ -5,17 +5,21 @@ set -x
 
 set -eo pipefail
 
-# Execute original assemble script.
+# Activate ipywidgets extension.
+#jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
-/opt/app-root/builder/assemble
+# Also activate ipywidgets extension for JupyterLab.
+
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 # Do custom work in here
 
+R --no-save -e 'install.packages("pbdZMQ", repos="https://cran.revolutionanalytics.com/", clean=TRUE)'
+R --no-save -e 'devtools::install_github("IRkernel/IRkernel"); IRkernel::installspec()'
 
-
-
+# Execute original assemble script.
+/opt/app-root/builder/assemble
 
 
 # Fix up permissions.
-
 fix-permissions /opt/app-root
