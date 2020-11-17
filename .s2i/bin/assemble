@@ -7,10 +7,8 @@ set -eo pipefail
 
 # Activate ipywidgets extension.
 #jupyter nbextension enable --py widgetsnbextension --sys-prefix
-
 # Also activate ipywidgets extension for JupyterLab.
-
-jupyter labextension install @jupyter-widgets/jupyterlab-manager
+#jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 # Do custom work in here
 
