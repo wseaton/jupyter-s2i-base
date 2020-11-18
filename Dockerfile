@@ -2,6 +2,13 @@ FROM quay.io/guimou/s2i-minimal-centos-notebook:3.6
 
 USER root
 
+RUN rm -rf /tmp/src/.git* && \
+    chown -R 1001 /tmp/src && \
+    chgrp -R 0 /tmp/src && \
+    chmod -R g+w /tmp/src && \
+    rm -rf /tmp/scripts && \
+    mv /tmp/src/.s2i/bin /tmp/scripts
+
 # Setup EPEL
 RUN yum -y --disableplugin=subscription-manager install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum -y --disableplugin=subscription-manager update 
