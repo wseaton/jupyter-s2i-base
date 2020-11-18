@@ -5,18 +5,17 @@ set -x
 
 set -eo pipefail
 
+# Execute original assemble script.
+/opt/app-root/builder/assemble
+
 # Activate ipywidgets extension.
 jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
 # Also activate ipywidgets extension for JupyterLab.
-#jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 # install R kernel
 R --no-save -e 'install.packages("IRkernel"); IRkernel::installspec()
-
-
-# Execute original assemble script.
-/opt/app-root/builder/assemble
 
 
 # Fix up permissions.

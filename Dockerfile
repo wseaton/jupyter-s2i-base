@@ -2,15 +2,6 @@ FROM quay.io/guimou/s2i-minimal-centos-notebook:3.6
 
 USER root
 
-COPY . /tmp/src
-
-RUN rm -rf /tmp/src/.git* && \
-    chown -R 1001 /tmp/src && \
-    chgrp -R 0 /tmp/src && \
-    chmod -R g+w /tmp/src && \
-    rm -rf /tmp/scripts && \
-    mv /tmp/src/.s2i/bin /tmp/scripts
-    
 # Setup EPEL
 RUN yum -y --disableplugin=subscription-manager install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum -y --disableplugin=subscription-manager update 
@@ -30,8 +21,7 @@ RUN cp /usr/lib64/R/library/stats/html/R.css /usr/share/doc/R-3.6.0/html/
 RUN R -e "install.packages(c('littler','stringr'))"
 
 # install the R kernel
-RUN R --no-save -e 'install.packages("pbdZMQ", repos="https://cran.revolutionanalytics.com/", clean=TRUE)'
-RUN R --no-save -e 'devtools::install_github("IRkernel/IRkernel"); IRkernel::installspec()'
+RUN R --no-save -e 'install.packages("IRkernel"); IRkernel::installspec()'
 
 # chmod for litter execution
 RUN chmod 755 /usr/lib64/R/library/littler/examples/install.r 

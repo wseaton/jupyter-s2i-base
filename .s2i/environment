@@ -1,1 +1,2 @@
 JUPYTER_ENABLE_LAB=true
+XDG_CACHE_HOME=/opt/app-root/src/.cache
